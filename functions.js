@@ -2,7 +2,7 @@ const rp = require('request-promise');
 const $ = require('cheerio');
 const baseUrl = 'https://ricette.giallozafferano.it'
 
-export const recipesFromIngredient = async ingredient => {
+exports.recipesFromIngredient = async ingredient => {
     return new Promise(async function (resolve, reject) {
     const url = `https://www.giallozafferano.it/ricerca-ricette/${ingredient}`;
 
@@ -15,15 +15,15 @@ export const recipesFromIngredient = async ingredient => {
     });
 }
 
-export const recipeFromUrl = async url => {
+exports.recipeFromUrl = async url => {
     return new Promise(async function (resolve, reject) {
         const html = await rp(url)   
         
         let ingredientsSC = $('dd.gz-ingredient > a', html).get() // Array of all the ingredients
         let ingredients = ingredientsSC.map(e => {
-            let ingredient = $(e).text()
+            let name = $(e).text()
             let quantity = $(e).parent().find('span').text().replace(/\t/g, '').replace(/\n/g, '')//.replace(/\s/g, '')
-            return {ingredient, quantity} //Return an array of objects with ingredient and quantity as properties
+            return {name, quantity} //Return an array of objects with ingredient and quantity as properties
         })
 
         let imgUrl = $('picture.gz-featured-image > source', html).attr('data-srcset') // Image of the recipe
