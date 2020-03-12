@@ -1,43 +1,27 @@
-const rp = require('request-promise');
-const $ = require('cheerio');
-const baseUrl = 'https://ricette.giallozafferano.it'
+var express = require('express');
+var app = express();
+import {recipesFromIngredient} from './functions'
 
-const recipesFromIngredient = async ingredient => {
-    return new Promise(async function (resolve, reject) {
-    const url = `https://www.giallozafferano.it/ricerca-ricette/${ingredient}`;
 
-    const html = await rp(url)
-    let elements = $('h2.gz-title > a', html).get()
+// set the port of our application
+// process.env.PORT lets the port be set by Heroku
+var port = process.env.PORT || 8080;
 
-    let recipes = elements.map(e => ({title: e.attribs.title, href: e.attribs.href}))
+// set the view engine to ejs
+app.set('view engine', 'ejs');
 
-    resolve(recipes)
-    });
-}
+// set the home page route
+app.get('/', function(req, res) {
 
-const recipeFromUrl = async url => {
-    return new Promise(async function (resolve, reject) {
-        const html = await rp(url)   
-        
-        let ingredientsSC = $('dd.gz-ingredient > a', html).get() // Array of all the ingredients
-        let ingredients = ingredientsSC.map(e => {
-            let ingredient = $(e).text()
-            let quantity = $(e).parent().find('span').text().replace(/\t/g, '').replace(/\n/g, '')//.replace(/\s/g, '')
-            return {ingredient, quantity} //Return an array of objects with ingredient and quantity as properties
-        })
+    res.send('index');
+});
 
-        let imgUrl = $('picture.gz-featured-image > source', html).attr('data-srcset') // Image of the recipe
-        let divP = $('div.gz-content-recipe.gz-mBottom4x > p', html) // Get all the elements with such a CSS Path
-        let description = divP.first().text() // If the element does not exist null is returned
-        let preservation = $(divP[2]).text() // If the element does not exist null is returned
-        let suggestion = $(divP[3]).text() // If the element does not exist null is returned 
+app.get('/ingredient', async function(req, res) {
 
-        let recipeSC = $('div.gz-content-recipe-step', html).get() // Array of all recipe steps
-        let recipe = recipeSC.map(e => {
-            let step = $('p', $(e)).text()
-            let imgUrl = baseUrl + $('picture > source', $(e)).attr('data-srcset')
-            return {step, imgUrl} //Return an array of objects with step and imgUrl as properties
-        }) 
-        resolve({ingredients, imgUrl, description, recipe, preservation, suggestion}) // Result object
-    });
-}
+    let result = await recipesFromIngredient('pomodoro')
+    res.send(result);
+});
+
+app.listen(port, function() {
+    console.log('Our app is running on http://localhost:' + port);
+});
