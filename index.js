@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');
 // set the home page route
 app.get('/', function(req, res) {
 
-    res.send('index');
+    res.send('This is the api index.\nTo call the api you have to use /api.');
 });
 
 app.post('/api', async function(req, res) {
