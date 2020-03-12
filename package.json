@@ -1,10 +1,9 @@
 {
-  "name": "giallozafferanoscraper",
+  "name": "GialloZafferano_Scraper",
   "version": "1.0.0",
-  "description": "Scraper",
+  "description": "This nodejs scraper will help you get data from giallozafferano.it",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
   "author": "Piervito Creanza",
