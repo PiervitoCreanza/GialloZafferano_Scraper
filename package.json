@@ -8,5 +8,11 @@
     "start": "node index.js"
   },
   "author": "Piervito Creanza",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "puppeteer": "^2.1.1",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5"
+  }
 }
