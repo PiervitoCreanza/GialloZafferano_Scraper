@@ -2,25 +2,6 @@ const rp = require('request-promise');
 const $ = require('cheerio');
 const baseUrl = 'https://ricette.giallozafferano.it'
 
-let a = {
-    "ingredients": [
-        {
-            "name": "string",
-            "quantity": "string"
-    }
-    ],
-    "recipe": [
-        {
-            "recipeStep": "string",
-            "recipeImages": "sring"
-        }
-    ],
-    "preservation": "string",
-    "suggestion": "string",
-    "imgUrl": "string"
-
-}
-
 const recipesFromIngredient = async ingredient => {
     const url = `https://www.giallozafferano.it/ricerca-ricette/${ingredient}`;
 
@@ -55,7 +36,7 @@ const recipeFromUrl = async url => {
         return {step, imgUrl} //Return an array of objects with step and imgUrl as properties
     })   
 
-    console.log({ingredients, imgUrl, description, recipe, preservation, suggestion}) // Result object
+    return {ingredients, imgUrl, description, recipe, preservation, suggestion} // Result object
 }
 
 recipeFromUrl('https://ricette.giallozafferano.it/Treccia-di-pasta-lievitata.html')
