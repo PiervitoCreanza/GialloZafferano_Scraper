@@ -38,6 +38,12 @@ exports.recipeFromUrl = async url => {
             let imgUrl = baseUrl + $('picture > source', $(e)).attr('data-srcset')
             return {step, imgUrl} //Return an array of objects with step and imgUrl as properties
         }) 
-        resolve({ingredients, imgUrl, description, recipe, preservation, suggestion}) // Result object
+
+        let difficulty = $('.gz-list-featured-data > ul:nth-child(1) > li:nth-child(1) > span:nth-child(2) > strong', html).text()
+        let prepTime = $('span.gz-icon.gz-icon-preparazione', html).next().children().text()
+        let cookTime = $('.gz-list-featured-data > ul:nth-child(1) > li:nth-child(3) > span:nth-child(2) > strong', html).text()
+        let yield = $('.gz-list-featured-data > ul:nth-child(1) > li:nth-child(4) > span:nth-child(2) > strong', html).text()
+        let price = $('.gz-list-featured-data > ul:nth-child(1) > li:nth-child(5) > span:nth-child(2) > strong', html).text()
+        resolve({ingredients, imgUrl, description, difficulty, prepTime, cookTime, yield, price, recipe, preservation, suggestion}) // Result object
     });
 }
