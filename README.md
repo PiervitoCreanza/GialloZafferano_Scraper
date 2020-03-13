@@ -37,6 +37,11 @@ You will get an object with the recipe data.
   "description": "string",
   "preservation": "string",
   "suggestion": "string",
+  "difficulty": "string",
+  "prepTime": "string",
+  "cookTime": "string",
+  "yield": "string",
+  "price": "string"
   "ingredients": [
       {
         "name": "string",
