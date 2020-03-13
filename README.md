@@ -41,7 +41,7 @@ You will get an object with the recipe data.
   "prepTime": "string",
   "cookTime": "string",
   "yield": "string",
-  "price": "string"
+  "price": "string",
   "ingredients": [
       {
         "name": "string",
